@@ -8,7 +8,7 @@ class AutenticationService
 {
     public static function login()
     {
-       $url = 'http://localhost:8000/api/login';
+       $url = 'http://eventsfull.com.br/api/login';
 
        // Cabeçalhos personalizados que deseja enviar
         $headers = array(

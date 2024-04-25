@@ -8,7 +8,7 @@ class UsersService
 {
     public static function register(Request $request, $token)
     {
-        $url = 'http://localhost:8000/api/users';
+        $url = 'http://eventsfull.com.br/api/users';
 
         // Cabeçalhos personalizados que deseja enviar
         $headers = array(
@@ -22,6 +22,7 @@ class UsersService
             "password" => $request->password
         );
 
+        $jsonData = json_encode($data);
         $ch = curl_init();
 
         // Configura as opções da requisição cURL
@@ -30,15 +31,14 @@ class UsersService
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Se true, segue redirecionamentos
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_POST, true); // Define o método HTTP como POST
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data)); // Define os dados a serem enviados no corpo da requisição
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData); // Define os dados a serem enviados no corpo da requisição
 
         // Executa a requisição cURL e obtém a resposta
         $response = curl_exec($ch);
-        die(var_export($response));
 
         // Verifica se ocorreu algum erro durante a requisição
         if(curl_errno($ch)){
-            echo 'Erro cURL: ' . curl_error($ch);
+            return curl_error($ch);
         }
 
         // Fecha a sessão cURL
